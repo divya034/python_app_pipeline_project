@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dockerflask
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: dockerflask
+  template:
+    metadata:
+      labels:
+        app: dockerflask
+    spec:
+      containers:
+      - name: dockerflask
+        image: rishabh9593776/dockerflask-1.0:latest
+        ports:
+        - containerPort: 5000
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: dockerflask
+  namespace: default
+spec:
+  type: ClusterIP
+  selector:
+    app: dockerflask
+  ports:
+  - protocol: TCP
+    port: 5000
+    targetPort: 5000
+
+
